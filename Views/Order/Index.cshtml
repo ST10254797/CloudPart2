@@ -1,0 +1,123 @@
+﻿@model IEnumerable<ABCRetailApp.Models.Order>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: white; /* Changed background color to white */
+            margin: 0;
+            padding: 20px;
+            color: black; /* Set default text color to black for better readability */
+        }
+
+        h1 {
+            text-align: center;
+            color: black; /* Header color changed to black */
+            margin-bottom: 20px; /* Spacing below the header */
+        }
+
+        .alert {
+            background-color: #28a745; /* Green background for success alerts */
+            color: #ffffff; /* White text for better contrast */
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #3498db; /* Primary button color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+            margin-bottom: 20px; /* Space below the button */
+        }
+
+            .btn:hover {
+                background-color: #218838; /* Darker shade on hover */
+            }
+
+        .table-container {
+            background-color: #f8f9fa; /* Light background for the table container */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background-color: #3498db; /* Header background color */
+            color: #fff; /* Header text color */
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            color: black; /* Text color for the table cells */
+        }
+
+        tbody tr:nth-child(even) {
+            background-color: #f2f2f2; /* Light gray for alternating row colors */
+        }
+
+        tbody tr:hover {
+            background-color: #e0e0e0; /* Row hover effect */
+        }
+    </style>
+</head>
+<body>
+    <h1>Orders</h1>
+
+    @if (TempData["OrderSuccess"] != null)
+    {
+        <div class="alert">
+            @TempData["OrderSuccess"]
+        </div>
+    }
+
+    <a href="@Url.Action("Create", "Order")" class="btn">Create New Order</a>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order Date</th>
+                    <th>Customer</th>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.OrderDate.ToString("yyyy/MM/dd HH:mm:ss")</td>
+                        <td>@order.CustomerId</td> <!-- Placeholder for Customer Name -->
+                        <td>@order.ProductId</td> <!-- Placeholder for Product Name -->
+                        <td>@order.Quantity</td>
+                        <td>@order.Price.ToString("C")</td>
+                        <td>@order.Status</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

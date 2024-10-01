@@ -1,0 +1,123 @@
+﻿@model IEnumerable<ABCRetailApp.Models.Product>
+
+@{
+    ViewData["Title"] = "Product List";
+}
+
+<h1 class="my-4 text-center">Product List</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="d-flex justify-content-between mb-4">
+    <a asp-action="Create" class="btn btn-success btn-lg">Add New Product</a>
+</div>
+
+<div class="product-list">
+    @foreach (var item in Model)
+    {
+        <div class="product-item mb-4 p-4 shadow-sm rounded d-flex align-items-center">
+            <div class="product-image">
+                @if (!string.IsNullOrEmpty(item.ImageUrl))
+                {
+                    <img src="@item.ImageUrl" alt="@item.ProductName" class="img-fluid rounded" style="max-width: 150px; max-height: 150px; object-fit: cover;" />
+                }
+            </div>
+            <div class="product-details ms-4 flex-grow-1">
+                <h5 class="mb-2">@item.ProductName</h5>
+                <p class="text-muted mb-2">@item.Description</p>
+                <p class="text-success font-weight-bold">@item.Price.ToString("C")</p>
+            </div>
+            <div class="product-actions">
+                <a asp-action="Details" asp-route-rowKey="@item.RowKey" class="btn btn-outline-primary btn-sm me-2">Details</a>
+                <a asp-action="Delete" asp-route-rowKey="@item.RowKey" class="btn btn-outline-danger btn-sm">Delete</a>
+            </div>
+        </div>
+    }
+</div>
+
+<style>
+    body {
+        background-color: #f4f6f9;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #343a40;
+    }
+
+    .h1 {
+        color: #212529;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    .product-list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-item {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        transition: box-shadow 0.3s ease-in-out;
+        padding: 20px;
+    }
+
+        .product-item:hover {
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        }
+
+    .product-image img {
+        border: 1px solid #dee2e6;
+        border-radius: 0.5rem;
+    }
+
+    .product-details h5 {
+        color: #343a40;
+        font-size: 1.4rem;
+        font-weight: 600;
+        margin-bottom: 10px;
+    }
+
+    .product-details p {
+        color: #6c757d;
+        font-size: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .product-details .text-success {
+        color: #28a745;
+    }
+
+    .product-actions .btn {
+        border-radius: 0.25rem;
+        padding: 6px 12px;
+    }
+
+    .btn-outline-primary {
+        color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-outline-danger {
+        color: #dc3545;
+        border-color: #dc3545;
+    }
+
+        .btn-outline-primary:hover,
+        .btn-outline-danger:hover {
+            color: white;
+        }
+</style>
